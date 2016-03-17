@@ -14,22 +14,23 @@
 # limitations under the License.
 #
 
-# Sample: This is where we'd set a backup provider if we had one
-# $(call inherit-product, device/sample/products/backup_overlay.mk)
-
-# Inherit from the common Open Source product configuration
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
-
-# Inherit from our custom product configuration
+# Inherit some common NP stuff.
 $(call inherit-product, vendor/np/config/common_full_phone.mk)
+
+# Enhanced NFC
 $(call inherit-product, vendor/np/config/nfc_enhanced.mk)
 
+# Inherit device configuration
+$(call inherit-product, device/lge/hammerhead/full_hammerhead.mk)
+
+## Device identifier. This must come after all inclusions
 PRODUCT_NAME := np_hammerhead
 PRODUCT_DEVICE := hammerhead
-PRODUCT_BRAND := lge
+PRODUCT_BRAND := google
 PRODUCT_MODEL := Nexus 5
 PRODUCT_MANUFACTURER := LGE
-PRODUCT_RESTRICT_VENDOR_FILES := false
 
-$(call inherit-product, device/lge/hammerhead/device.mk)
-$(call inherit-product-if-exists, vendor/lge/hammerhead/device-vendor.mk)
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRODUCT_NAME=hammerhead \
+    BUILD_FINGERPRINT=google/hammerhead/hammerhead:6.0.1/MMB29Q/2480792:user/release-keys \
+    PRIVATE_BUILD_DESC="hammerhead-user 6.0.1 MMB29Q 2480792 release-keys"
